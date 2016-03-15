@@ -1,0 +1,137 @@
+html, body {
+  font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  padding: 0;
+  margin-left: 0;
+}
+
+div#table {
+    margin-left: 20px;
+}
+
+table.expenses {
+    border-spacing: 0;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.expenses thead {
+    background-color: #eee !important;
+}
+
+.expenses td {
+    padding: 5px;
+}
+
+.expenses tr.item:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.expenses #noItems {
+  text-align: center;
+}
+
+.expenses td.description {
+    width: 100%;
+}
+
+.expenses td.delete {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+span.amount {
+    background-color: cornflowerblue;
+    color: #fff;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 3px;
+    margin-right: 0.2em;
+}
+
+#addItemButton {
+    position: fixed;
+    background-color: Mediumseagreen;
+    color: white;
+    font-size: 25px;
+    padding: 5px;
+    padding-top: 3px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    bottom: -4px;
+    right: 30px;
+    text-decoration: none;
+    border: none;
+}
+
+#addItemButton:focus {
+  outline: none;
+  cursor: pointer;
+}
+
+#addItemButton:hover {
+    bottom: 0px;
+}
+
+#addItemDialog {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.07);
+    border: dashed mediumaquamarine;
+    border-bottom: 0px;
+    bottom: 0px;
+    left: 25%;
+    right: 25%;
+}
+
+input#inputDes {
+    font-size: 15px;
+    width: 90%;
+}
+
+#mainInputs {
+  padding: 10px;
+}
+
+#additionalInputs {
+  border-top: dashed grey;
+  padding: 10px;
+  background-color: rgba(128, 128, 128, 0.26);
+}
+
+.secondLine {
+  margin-top: 5px;
+}
+
+/* http://demo.marcofolio.net/facebook_loader/ */
+#loader { width:36px; height:32px; margin: 0px auto; }
+
+/* Initial state */
+.loadingbar {
+    background-color:rgba(153, 153, 153, 0.64); border:1px solid transparent; float:left;
+    margin-right:4px; margin-top:6px; width:6px; height:18px;
+
+    /* Set the animation properties */
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: loadingbar;
+}
+
+/* Delay both the second and third bar at the start */
+#loader .loadingbar:nth-child(2) { -webkit-animation-delay: 0.1s; }
+#loader .loadingbar:nth-child(3) { -webkit-animation-delay: 0.2s; }
+
+/* The actual animation */
+@-webkit-keyframes loadingbar {
+     0% { }
+    10% { margin-top:5px; height:22px; }
+    20% { margin-top:0px; height:32px; }
+    30% { margin-top:1px; height:30px; }
+    40% { margin-top:3px; height:26px; }
+    50% { margin-top:5px; height:22px; }
+    60% { margin-top:6px; height:18px; }
+    70% { }
+    /* Missing frames will cause the extra delay */
+    100% { }
+}

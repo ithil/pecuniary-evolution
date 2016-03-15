@@ -1,0 +1,25 @@
+{
+  "name": "pecuniary-evolution",
+  "description": "-",
+  "version": "0.1",
+  "main": "./main.html",
+  "window": {
+    "title": "Pecuniary Evolution",
+    "show": true,
+    "toolbar": false,
+    "frame": true,
+    "position": "center",
+    "width": 825,
+    "height": 580,
+    "min_width": 220,
+    "min_height": 220
+  },
+  "license": "MIT",
+  "os": [ "darwin" ],
+  "dependencies": {
+    "linvodb3":"",
+    "medeadown":"",
+    "mkdirp":"",
+    "handlebars":""
+  }
+}

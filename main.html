@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pecuniary Evolution</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Vendor libraries -->
+    <script src="vendor/jquery-2.2.1.min.js"></script>
+    <script src="vendor/jquery-ui.min.js"></script>
+    <script src="vendor/jquery.hotkeys.js"></script>
+    <link rel="stylesheet" href="vendor/jquery-ui.css">
+</head>
+<body>
+
+    <div id="loader">
+        <div class="loadingbar"></div>
+        <div class="loadingbar"></div>
+        <div class="loadingbar"></div>
+    </div>
+
+    <div id="table"></div>
+    <button id="addItemButton">+</button>
+    <div id="addItemDialog">
+      <div id="mainInputs">
+        <div class="firstLine">
+          <input type="text" id="inputDes" placeholder="Description">
+          <span id="inputAmountContainer">
+            <span class="amount" id="inputAmount" contenteditable="true">1</span>
+          </span>
+        </div>
+        <div class="secondLine">
+          <input type="text" id="inputPrice" placeholder="Price">
+          <input type="text" id="inputDate" placeholder="Date">
+        </div>
+      </div>
+      <div id="additionalInputs">
+        <div class="firstLine">
+          <input type="text" id="inputWeight" placeholder="Weight">
+          <input type="text" id="inputLocation" placeholder="Location">
+        </div>
+        <div class="secondLine">
+          <input type="text" id="inputTags" placeholder="Tags">
+        </div>
+      </div>
+    </div>
+    <script src="lib/main.js" charset="UTF-8"></script>
+</body>
+</html>
