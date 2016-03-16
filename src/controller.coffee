@@ -65,6 +65,10 @@ submitItem = () ->
     unless weight.unit
       weight.unit = 'g'
 
+  tagsInput = $('#inputTags').val()
+  if tagsInput
+    tags = tagsInput.match(/[^,]+/g).map (i) -> i.trim()
+
   return false unless des and price and date # Abort if one of the values is missing
   expenses.addItem({
     description: des
@@ -73,6 +77,7 @@ submitItem = () ->
     amount: if amount > 1 then amount else undefined
     location: location
     weight: weight
+    tags: tags
   }, ->
     view.loadItems()
   )
