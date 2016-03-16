@@ -55,13 +55,24 @@ submitItem = () ->
   date = parseDate($('#inputDate').val())
   amount = parseInt $('#inputAmount').text()
   location = $('#inputLocation').val()
+
+  weightInput = $('#inputWeight').val()
+  weightRE = /([\d\.]+)\s*([a-zA-z]*)/g
+  weightMatch = weightRE.exec weightInput
+  if weightMatch
+    weight = { }
+    [__, weight.amount, weight.unit] = weightMatch
+    unless weight.unit
+      weight.unit = 'g'
+
   return false unless des and price and date # Abort if one of the values is missing
   expenses.addItem({
     description: des
-    price: { amount: parseFloat price, currency: 'EUR' }
+    price: { amount: parseFloat(price), currency: 'EUR' }
     date: date
     amount: if amount > 1 then amount else undefined
     location: location
+    weight: weight
   }, ->
     view.loadItems()
   )
