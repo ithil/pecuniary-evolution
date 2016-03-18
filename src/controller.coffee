@@ -5,6 +5,7 @@ document  = window.document
 parseDate = app.utils.parseDate
 view      = app.view
 expenses  = app.expensesDb
+products  = app.productsDb
 
 $ ->
   $('#loader').hide()
@@ -90,3 +91,24 @@ $('.expenses tbody').on 'click', '.delete', ->
   id = $(this).parent().data 'id'
   expenses.deleteItem id, ->
     view.loadItems()
+
+$('#inputDes').autocomplete
+  source: (input, callback) ->
+    query = input.term
+    products.getProducts query, (docs) ->
+      items = [ ] # Array to contain all the suggestion entries
+      docs.forEach (d) ->
+        item = { }
+        item.value = d.description
+        item.id = d._id
+        item.price = d.price
+        item.location = d.location
+        item.tags = d.tags
+        # ^ That's super ugly, I know
+        items.push item
+      callback items
+  select: (event, ui) ->
+    item = ui.item
+    $('#inputPrice').val item.price.amount
+    $('#inputLocation').val item.location
+    $('#inputTags').val item.tags.join ', '

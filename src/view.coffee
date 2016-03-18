@@ -47,6 +47,17 @@ loadItems = ->
       expenseTable.addItems items
     else
       $('#noItems').show()
+$ ->
+  $inputDes = $('#inputDes')
+  template = loadTemplate 'add-item-autocomplete'
+  $inputDes.autocomplete('instance')?._renderItem = (ul, item) ->
+    $(template(
+      description: item.value
+      price: item.price?.amount.toFixed 2
+      location: item.location
+    )).appendTo ul
+  $inputDes.autocomplete 'option', 'position', { my: 'left bottom', at: 'left top'}
+
 
 module.exports = {
   expenseTable
