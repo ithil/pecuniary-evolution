@@ -1,7 +1,4 @@
-LinvoDB = require("linvodb3")
-LinvoDB.defaults.store = { db: require("medeadown") }
-require('mkdirp').sync "#{__dirname}/../db"
-LinvoDB.dbPath = "#{__dirname}/../db"
+LinvoDB = app.database.LinvoDB
 
 expenses = new LinvoDB "expenses", {  }
 
