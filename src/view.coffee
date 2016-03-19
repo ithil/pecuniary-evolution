@@ -24,6 +24,7 @@ class ExpenseTable
     row = $(template(
       description: item.description
       amount: item.amount
+      price: item.price?.amount.toFixed 2
       total_price: (item.price?.amount*(item.amount or 1)).toFixed 2
       date: item.date?.toLocaleDateString 'de-DE'
     ))

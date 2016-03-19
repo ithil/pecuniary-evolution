@@ -3,9 +3,13 @@
     {{#if amount}}
       <span class="amount">{{amount}}</span>
     {{/if}}
-    {{description}}
+    <span>{{description}}</span>
   </td>
-  <td class="price" title="{{amount}}x price">
+  {{#if amount}}
+  <td class="price" title="{{amount}}x {{price}}">
+  {{else}}
+  <td class="price">
+  {{/if}}
     {{total_price}}
   </td>
   <td class="date">
