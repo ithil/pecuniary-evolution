@@ -4,8 +4,8 @@ window    = app.window
 document  = window.document
 parseDate = app.utils.parseDate
 view      = app.views.expenses
-expenses  = app.expensesDb
-products  = app.productsDb
+expenses  = app.databases.expenses
+products  = app.databases.products
 
 $ ->
   $('#loader').hide()

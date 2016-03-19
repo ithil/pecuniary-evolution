@@ -1,5 +1,5 @@
 $ = app.$
-expenses = app.expensesDb
+expenses = app.databases.expenses
 loadTemplate = app._view.loadTemplate
 
 class ExpenseTable
