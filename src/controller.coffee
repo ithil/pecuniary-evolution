@@ -3,7 +3,7 @@ gui       = app.gui
 window    = app.window
 document  = window.document
 parseDate = app.utils.parseDate
-view      = app.view
+view      = app.views.expenses
 expenses  = app.expensesDb
 products  = app.productsDb
 
