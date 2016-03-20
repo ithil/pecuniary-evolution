@@ -1,7 +1,7 @@
 $ = app.$
 LinvoDB = app._database.LinvoDB
 
-products = new LinvoDB "products", {  }
+products = new LinvoDB 'products', {  }
 
 getProducts = (query, callback) ->
   queryRE = new RegExp query, 'gi'

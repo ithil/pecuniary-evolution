@@ -1,6 +1,6 @@
 LinvoDB = app._database.LinvoDB
 
-expenses = new LinvoDB "expenses", {  }
+expenses = new LinvoDB 'expenses', {  }
 
 getAllExpenses = (callback) ->
   expenses.find({ }).sort({date: -1}).exec (err, items) ->
