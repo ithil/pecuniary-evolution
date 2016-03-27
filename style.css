@@ -4,38 +4,71 @@ html, body {
   margin-left: 0;
 }
 
-div#table {
-    margin-left: 20px;
+div#tabs .tab {
 }
 
-table.expenses {
+div#tabs {
+  margin-left: 20px;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+}
+
+.ui-tabs .ui-tabs-nav {
+	margin: 0;
+	padding: 0px;
+}
+.ui-tabs .ui-tabs-nav li {
+	list-style: none;
+	float: left;
+	position: relative;
+	top: 0;
+	border-bottom-width: 0;
+	padding: 10px;
+	white-space: nowrap;
+}
+.ui-tabs .ui-tabs-nav li:focus {
+  outline: none;
+}
+.ui-tabs-nav a {
+    color: black;
+    text-decoration: none;
+}
+.ui-tabs-nav a:focus {
+	outline: none;
+}
+li.ui-tabs-active {
+    background-color: #eee;
+		font-weight: bold;
+}
+
+table.table {
     border-spacing: 0;
-    border: 1px solid #dddddd;
-    border-radius: 4px;
+    /*border: 1px solid #dddddd;*/
+    /*border-radius: 4px;*/
     width: 100%;
 }
 
-.expenses thead {
+.table thead {
     background-color: #eee !important;
 }
 
-.expenses td {
+.table td {
     padding: 5px;
 }
 
-.expenses tr.item:nth-child(odd) {
+.table tr.item:nth-child(odd) {
     background-color: #f9f9f9;
 }
 
-.expenses #noItems {
+.table #noItems {
   text-align: center;
 }
 
-.expenses td.description {
+.table td.description {
     width: 100%;
 }
 
-.expenses td.delete {
+.table td.delete {
   cursor: pointer;
   font-weight: bold;
 }
@@ -104,6 +137,98 @@ input#inputDes {
   margin-top: 5px;
 }
 
+.ui-autocomplete {
+	position: absolute;
+	top: 0;
+	left: 0;
+	cursor: default;
+}
+
+.ui-autocomplete.ui-menu {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: block;
+	outline: none;
+}
+.ui-autocomplete.ui-menu .ui-menu {
+	position: absolute;
+}
+.ui-autocomplete.ui-menu .ui-menu-item {
+	position: relative;
+	margin: 0;
+	padding: 3px 1em 3px .4em;
+	cursor: pointer;
+	min-height: 0; /* support: IE7 */
+	/* support: IE10, see #8844 */
+	list-style-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+}
+.ui-autocomplete.ui-menu .ui-menu-divider {
+	margin: 5px 0;
+	height: 0;
+	font-size: 0;
+	line-height: 0;
+	border-width: 1px 0 0 0;
+}
+.ui-autocomplete.ui-widget-content {
+	border: 1px solid #dddddd;
+	background: #ffffff;
+	color: #333333;
+}
+.ui-autocomplete.ui-menu .ui-state-focus {
+	border: 1px solid #cccccc;
+	background: #ededed;
+	font-weight: normal;
+	color: #2b2b2b;
+}
+.ui-helper-hidden {
+	display: none;
+}
+.ui-helper-hidden-accessible {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+.ui-helper-reset {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	line-height: 1.3;
+	text-decoration: none;
+	font-size: 100%;
+	list-style: none;
+}
+.ui-helper-clearfix:before,
+.ui-helper-clearfix:after {
+	content: "";
+	display: table;
+	border-collapse: collapse;
+}
+.ui-helper-clearfix:after {
+	clear: both;
+}
+.ui-helper-clearfix {
+	min-height: 0; /* support: IE7 */
+}
+.ui-helper-zfix {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	position: absolute;
+	opacity: 0;
+	filter:Alpha(Opacity=0); /* support: IE8 */
+}
+
+.ui-front {
+	z-index: 100;
+}
 /* http://demo.marcofolio.net/facebook_loader/ */
 #loader { width:36px; height:32px; margin: 0px auto; }
 

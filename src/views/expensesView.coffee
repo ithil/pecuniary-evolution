@@ -31,7 +31,7 @@ class ExpenseTable
   clearTable: ->
     @body.empty()
 
-expenseTable = new ExpenseTable $('#table')
+expenseTable = new ExpenseTable $('#expenses-tab')
 loadItems = ->
   expenses.getAllExpenses (items) ->
     expenseTable.clearTable()
@@ -51,6 +51,5 @@ $ ->
   $inputDes.autocomplete 'option', 'position', { my: 'left bottom', at: 'left top'}
 
 module.exports = {
-  expenseTable
   loadItems
 }

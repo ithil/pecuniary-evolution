@@ -1,5 +1,6 @@
 fs = require 'fs'
 Handlebars = require 'handlebars'
+$ = app.$
 
 _templateCache = { }
 loadTemplate = (name) ->
@@ -9,10 +10,26 @@ loadTemplate = (name) ->
   _templateCache[name] = template
   return template
 
+# Tabs
+addTab = (name, id) ->
+  tabNav = $ "<li><a href='##{id}-tab'>#{name}</a></li>"
+  tabNav.appendTo '#tabs ul'
+  tabContent = $ "<div id='#{id}-tab' class='tab'></div>"
+  tabContent.appendTo '#tabs'
+  $('#tabs').tabs 'refresh'
+
+$tabs = $ '#tabs'
+$tabs.tabs()
+addTab 'Expenses', 'expenses'
+addTab 'Products', 'products'
+$tabs.tabs 'option', 'active', 0
+$tabs.show()
+
 app._view = { }
 app._view.loadTemplate = loadTemplate
 views = { }
 views.expenses = require './views/expensesView.js'
+views.products = require './views/productsView.js'
 
 module.exports = {
   views
