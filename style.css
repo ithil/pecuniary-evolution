@@ -68,6 +68,10 @@ table.table {
     width: 100%;
 }
 
+.table td.price {
+  text-align: right;
+}
+
 .table td.delete {
   cursor: pointer;
   font-weight: bold;
