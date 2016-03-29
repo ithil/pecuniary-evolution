@@ -1,0 +1,184 @@
+@import jquery-ui
+html, body
+  font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif
+  padding: 0
+  margin-left: 0
+
+// Tabs
+div#tabs
+  margin-left: 20px
+  border: 1px solid #dddddd
+  border-radius: 4px
+  .ui-tabs-nav
+    margin: 0
+    padding: 0
+    li
+      list-style: none
+      float: left
+      position: relative
+      top: 0
+      border-bottom-width: 0
+      padding: 10px
+      white-space: nowrap
+    li:focus
+      outline: none
+    li.ui-tabs-active
+      background-color: #eee
+      font-weight: bold
+    a
+      color: black
+      text-decoration: none
+    a:focus
+      outline: none
+
+.table
+  border-spacing: 0
+  width: 100%
+  thead
+    background-color: #eee !important
+  #noItems
+    text-align: center
+  td
+    padding: 5px
+  td.description
+    width: 100%
+  td.price
+    text-align: right
+  td.delete
+    cursor: pointer
+    font-weight: bold
+  tbody tr:nth-child(odd)
+    background-color: #f9f9f9
+
+span.amount
+  background-color: cornflowerblue
+  color: #fff
+  padding-top: 2px
+  padding-bottom: 2px
+  padding-left: 4px
+  padding-right: 4px
+  border-radius: 3px
+  margin-right: 0.2em
+
+#addItemButton
+  position: fixed
+  background-color: mediumseagreen
+  color: white
+  font-size: 25px
+  padding: 5px
+  padding-top: 3px
+  border-top-left-radius: 5px
+  border-top-right-radius: 5px
+  bottom: -4px
+  right: 30px
+  text-decoration: none
+  border: none
+  &:focus
+    outline: none
+  &:hover
+    cursor: pointer
+    bottom: 0px
+
+#addItemDialog
+  position: fixed
+  background-color: rgba(0, 0, 0, 0.07)
+  border: dashed mediumaquamarine
+  border-bottom: 0px
+  bottom: 0px
+  left: 25%
+  right: 25%
+  input#inputDes
+    font-size: 15px
+    width: 90%
+  #mainInputs
+    padding: 10px
+  #additionalInputs
+    border-top: dashed grey
+    padding: 10px
+    background-color: rgba(128, 128, 128, 0.26)
+  .secondLine
+    margin-top: 5px
+
+
+// Autocomplete
+.ui-autocomplete
+  position: absolute
+  top: 0
+  left: 0
+  cursor: default
+  &.ui-menu
+    list-style: none
+    padding: 0
+    margin: 0
+    display: block
+    outline: none
+    .ui-menu
+      position: absolute
+    .ui-menu-item
+      position: relative
+      margin: 0
+      padding: 3px 1em 3px .4em
+      cursor: pointer
+    .ui-menu-divider
+      margin: 5px 0
+      height: 0
+      font-size: 0
+      line-height: 0
+      border-width: 1px 0 0 0
+    .ui-state-focus
+      border: 1px soild #cccccc
+      background: #ededed
+      font-weight: normal
+      color: #2b2b2b
+  &.ui-widget-content
+    background: #ffffff
+    border: 1px solid #dddddd
+    color: #333333
+/* http://demo.marcofolio.net/facebook_loader/ */
+#loader
+  height: 32px
+  margin: 0px auto
+  width: 36px
+
+/* Initial state */
+.loadingbar
+  background-color: rgba(153, 153, 153, 0.64)
+  border: 1px solid transparent
+  float: left
+  margin-right: 4px
+  margin-top: 6px
+  width: 6px
+  height: 18px
+  /* Set the animation properties */
+  -webkit-animation-duration: 1s
+  -webkit-animation-iteration-count: infinite
+  -webkit-animation-name: loadingbar
+
+
+/* Delay both the second and third bar at the start */
+#loader .loadingbar:nth-child(2)
+  -webkit-animation-delay: 0.1s
+#loader .loadingbar:nth-child(3)
+  -webkit-animation-delay: 0.2s
+
+/* The actual animation */
+@-webkit-keyframes loadingbar
+  10%
+    margin-top: 5px
+    height: 22px
+  20%
+    margin-top: 0px
+    height: 32px
+  30%
+    margin-top: 1px
+    height: 30px
+  40%
+    margin-top: 3px
+    height: 26px
+  50%
+    margin-top: 5px
+    height: 22px
+  60%
+    margin-top: 6px
+    height: 18px
+  /* Missing frames will cause the extra delay */

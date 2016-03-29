@@ -5,3 +5,6 @@ task 'build', "Build project", ->
   exec 'coffee --bare --map --compile --output lib/ src/', (err, stdout, stderr) ->
     throw err if err
     puts stdout + stderr
+  exec 'sass --update sass:css', (err, stdout, stderr) ->
+    throw err if err
+    puts stdout + stderr
