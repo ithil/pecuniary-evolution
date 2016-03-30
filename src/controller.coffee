@@ -9,7 +9,8 @@ $ ->
   views.expenses.loadItems()
 
 # Global keyboard shortcuts
-$(document).bind 'keydown', 'ctrl+d', -> gui.Window.get().showDevTools()
+globalListener = new window.keypress.Listener()
+globalListener.simple_combo 'ctrl d', -> gui.Window.get().showDevTools()
 
 controllers = { }
 controllers.expenses = require './controllers/expensesCtrl.js'
