@@ -76,8 +76,8 @@ submitItem = () ->
   )
   clearAddItemDialog()
 
-$('#inputDes, #inputPrice, #inputDate').bind 'keydown', 'return', ->
-  submitItem()
+$('#inputDes, #inputPrice, #inputDate').bind 'keydown', (e) ->
+  submitItem() if e.which == 13 # Enter
 
 $('.expenses tbody').on 'click', '.delete', ->
   id = $(this).parent().data 'id'
