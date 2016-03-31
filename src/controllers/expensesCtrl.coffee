@@ -76,8 +76,10 @@ submitItem = () ->
   )
   clearAddItemDialog()
 
-$('#inputDes, #inputPrice, #inputDate').bind 'keydown', (e) ->
-  submitItem() if e.which == 13 # Enter
+listener = new window.keypress.Listener $('#addItemDialog')
+listener.simple_combo 'shift enter', -> submitItem()
+listener.simple_combo 'ctrl a', -> $('#inputAmount').text (__, str) -> parseInt(str)+1
+listener.simple_combo 'ctrl x', -> $('#inputAmount').text (__, str) -> parseInt(str)-1
 
 $('.expenses tbody').on 'click', '.delete', ->
   id = $(this).parent().data 'id'
