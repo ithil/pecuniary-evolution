@@ -39,11 +39,16 @@ loadItems = ->
       expenseTable.addItems items
     else
       $('#noItems').show()
+
+$('<button>+</button>').attr('id', 'addItemButton').appendTo '#expenses-tab'
+AIDtemplate = $ loadTemplate('add-item-dialog')()
+AIDtemplate.appendTo '#expenses-tab'
+
 $ ->
   $inputDes = $('#inputDes')
-  template = loadTemplate 'add-item-autocomplete'
+  ACTemplate = loadTemplate 'add-item-autocomplete'
   $inputDes.autocomplete('instance')?._renderItem = (ul, item) ->
-    $(template(
+    $(ACTemplate(
       description: item.value
       price: item.price?.amount.toFixed 2
       location: item.location
