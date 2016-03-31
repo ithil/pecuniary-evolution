@@ -28,6 +28,8 @@ class ProductsTable
   clearTable: ->
     @body.empty()
 
+$('<button>Add product</button>').attr(id:'addProductButton', class:'addButton').appendTo '#products-tab'
+
 productsTable = new ProductsTable $('#products-tab')
 loadProducts = ->
   products.getProducts '', (products) ->

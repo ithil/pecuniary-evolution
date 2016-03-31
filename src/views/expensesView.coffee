@@ -40,7 +40,7 @@ loadItems = ->
     else
       $('#noItems').show()
 
-$('<button>+</button>').attr('id', 'addItemButton').appendTo '#expenses-tab'
+$('<button>+</button>').attr(id:'addItemButton', class:'addButton').appendTo '#expenses-tab'
 AIDtemplate = $ loadTemplate('add-item-dialog')()
 AIDtemplate.appendTo '#expenses-tab'
 
