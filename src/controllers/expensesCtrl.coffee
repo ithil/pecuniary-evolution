@@ -47,7 +47,7 @@ submitItem = () ->
   price = $('#inputPrice').val()
   date = parseDate($('#inputDate').val())
   amount = parseInt $('#inputAmount').text()
-  location = $('#inputLocation').val()
+  shop = $('#inputShop').val()
 
   weightInput = $('#inputWeight').val()
   weightRE = /([\d\.]+)\s*([a-zA-z]*)/g
@@ -68,7 +68,7 @@ submitItem = () ->
     price: { amount: parseFloat(price), currency: 'EUR' }
     date: date
     amount: if amount > 1 then amount else undefined
-    location: location
+    shop: shop
     weight: weight
     tags: tags
   }, ->
@@ -96,7 +96,7 @@ $('#inputDes').autocomplete
         item.value = d.description
         item.id = d._id
         item.price = d.price
-        item.location = d.location
+        item.shop = d.shop
         item.tags = d.tags
         # ^ That's super ugly, I know
         items.push item
@@ -104,5 +104,5 @@ $('#inputDes').autocomplete
   select: (event, ui) ->
     item = ui.item
     $('#inputPrice').val item.price.amount
-    $('#inputLocation').val item.location
+    $('#inputShop').val item.shop
     $('#inputTags').val item.tags.join ', '

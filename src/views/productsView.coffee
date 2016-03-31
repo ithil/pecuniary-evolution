@@ -15,7 +15,7 @@ class ProductsTable
     row = $(template(
       description: product.description
       price: product.price?.amount.toFixed 2
-      location: product.location
+      shop: product.shop
     ))
     row.data 'id', product._id
     @table.find('#noProducts').hide()

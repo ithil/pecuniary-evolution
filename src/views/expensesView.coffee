@@ -51,7 +51,7 @@ $ ->
     $(ACTemplate(
       description: item.value
       price: item.price?.amount.toFixed 2
-      location: item.location
+      shop: item.shop
     )).appendTo ul
   $inputDes.autocomplete 'option', 'position', { my: 'left bottom', at: 'left top'}
 
