@@ -8,6 +8,7 @@ app._database.LinvoDB = LinvoDB
 databases = { }
 databases.expenses = require './databases/expensesDb.js'
 databases.products = require './databases/productsDb.js'
+databases.things = require './databases/thingsDb.js'
 
 module.exports = {
   databases

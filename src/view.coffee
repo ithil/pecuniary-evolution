@@ -22,6 +22,7 @@ $tabs = $ '#tabs'
 $tabs.tabs()
 addTab 'Expenses', 'expenses'
 addTab 'Products', 'products'
+addTab 'Things', 'things'
 $tabs.tabs 'option', 'active', 0
 $tabs.show()
 
@@ -30,6 +31,7 @@ app._view.loadTemplate = loadTemplate
 views = { }
 views.expenses = require './views/expensesView.js'
 views.products = require './views/productsView.js'
+views.things = require './views/thingsView.js'
 
 module.exports = {
   views
