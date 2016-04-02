@@ -87,26 +87,33 @@ span.amount
   font-size: 17px
   padding: 10px
 
-#addItemDialog
+.addDialog
   position: fixed
   background-color: rgba(0, 0, 0, 0.07)
-  border: dashed mediumaquamarine
   border-bottom: 0px
   bottom: 0px
   left: 25%
   right: 25%
-  input#inputDes
-    font-size: 15px
-    width: 90%
-  #mainInputs
+  .mainInputs
     padding: 10px
-  #additionalInputs
+  .additionalInputs
     border-top: dashed grey
     padding: 10px
     background-color: rgba(128, 128, 128, 0.26)
   .secondLine
     margin-top: 5px
 
+#addItemDialog
+  border: dashed mediumaquamarine
+  input.inputDes
+    font-size: 15px
+    width: 90%
+
+#addProductDialog
+  border: dashed royalblue
+  input.inputDes
+    font-size: 15px
+    width: 100%
 
 // Autocomplete
 .ui-autocomplete

@@ -29,6 +29,8 @@ class ProductsTable
     @body.empty()
 
 $('<button>Add product</button>').attr(id:'addProductButton', class:'addButton').appendTo '#products-tab'
+APDtemplate = $ loadTemplate('add-product-dialog')()
+APDtemplate.appendTo '#products-tab'
 
 productsTable = new ProductsTable $('#products-tab')
 loadProducts = ->

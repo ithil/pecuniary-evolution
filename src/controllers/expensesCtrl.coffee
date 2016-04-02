@@ -7,18 +7,18 @@ expenses  = app.databases.expenses
 products  = app.databases.products
 
 # Select all on focus
-$('#inputPrice').focus -> this.select()
-$('#inputDate').focus -> this.select()
+$('#addItemDialog .inputPrice').focus -> this.select()
+$('#addItemDialog .inputDate').focus -> this.select()
 
 # Parse date as soon as the input loses focus
-$('#inputDate').blur ->
+$('#addItemDialog .inputDate').blur ->
   e = $(this)
   parsedDate = parseDate e.val()
   if parsedDate
     dateStr = "#{parsedDate.getDate()}/#{parsedDate.getMonth()+1}/#{parsedDate.getFullYear()}"
     e.val dateStr
 
-$('#inputPrice').blur ->
+$('#addItemDialog .inputPrice').blur ->
   e = $(this)
   val = parseFloat e.val()
   unless isNaN val
@@ -32,24 +32,24 @@ toggleAddItemDialog = ->
     addItemDialog.hide() if visible
   bottomPixels = addItemDialog.height()+3
   addItemDialog.animate(
-    { bottom: if visible then "-#{bottomPixels}px" else '0px' },
+    { bottom: if visible then "-#{bottomPixels}px" else '-3px' },
     { duration: 250, complete: onComplete }
   )
 $('#addItemButton').click toggleAddItemDialog
-toggleAddItemDialog()
+$('#addItemDialog').css 'bottom', "-#{$('#addItemDialog').height()+3}px"
 
 clearAddItemDialog = () ->
   $('#addItemDialog input').val('')
-  $('#inputAmount').text('1')
+  $('#addItemDialog .inputAmount').text('1')
 
 submitItem = () ->
-  des = $('#inputDes').val()
-  price = $('#inputPrice').val()
-  date = parseDate($('#inputDate').val())
-  amount = parseInt $('#inputAmount').text()
-  shop = $('#inputShop').val()
+  des = $('#addItemDialog .inputDes').val()
+  price = $('#addItemDialog .inputPrice').val()
+  date = parseDate($('#addItemDialog .inputDate').val())
+  amount = parseInt $('#addItemDialog .inputAmount').text()
+  shop = $('#addItemDialog .inputShop').val()
 
-  weightInput = $('#inputWeight').val()
+  weightInput = $('#addItemDialog .inputWeight').val()
   weightRE = /([\d\.]+)\s*([a-zA-z]*)/g
   weightMatch = weightRE.exec weightInput
   if weightMatch
@@ -58,7 +58,7 @@ submitItem = () ->
     unless weight.unit
       weight.unit = 'g'
 
-  tagsInput = $('#inputTags').val()
+  tagsInput = $('#addItemDialog .inputTags').val()
   if tagsInput
     tags = tagsInput.match(/[^,]+/g).map (i) -> i.trim()
 
@@ -86,7 +86,7 @@ $('.expenses tbody').on 'click', '.delete', ->
   expenses.deleteItem id, ->
     view.loadItems()
 
-$('#inputDes').autocomplete
+$('#addItemDialog .inputDes').autocomplete
   source: (input, callback) ->
     query = input.term
     products.getProducts query, (docs) ->
@@ -103,6 +103,6 @@ $('#inputDes').autocomplete
       callback items
   select: (event, ui) ->
     item = ui.item
-    $('#inputPrice').val item.price.amount
-    $('#inputShop').val item.shop
-    $('#inputTags').val item.tags.join ', '
+    $('#addItemDialog .inputPrice').val item.price.amount
+    $('#addItemDialog .inputShop').val item.shop
+    $('#addItemDialog .inputTags').val item.tags.join ', '

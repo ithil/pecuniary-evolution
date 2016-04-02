@@ -16,6 +16,7 @@ globalListener.sequence_combo 'ctrl s p', -> $('a[href="#products-tab"]').click(
 
 controllers = { }
 controllers.expenses = require './controllers/expensesCtrl.js'
+controllers.products = require './controllers/productsCtrl.js'
 
 module.exports = {
   controllers
