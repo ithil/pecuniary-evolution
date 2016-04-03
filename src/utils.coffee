@@ -42,4 +42,16 @@ utils.parseDate = (str) ->
   else return undefined
   return new Date new Date().getTime()-(diff*24*36e5)
 
+currencySymbols =
+  'EUR': '€'
+  'USD': '$'
+  'GPB': '£'
+
+utils.formatPrice = (price, n) ->
+  unless price.amount? then return undefined
+  amount = (price.amount*(n or 1)).toFixed 2
+  currency = price.currency
+  currencySymbol = currencySymbols[currency] or currency
+  return amount+(currencySymbol or '')
+
 module.exports = utils

@@ -1,6 +1,7 @@
 $ = app.$
 expenses = app.databases.expenses
 loadTemplate = app._view.loadTemplate
+formatPrice = app.utils.formatPrice
 
 class ExpenseTable
   constructor: (container) ->
@@ -15,12 +16,12 @@ class ExpenseTable
     row = $(template(
       description: item.description
       amount: item.amount
-      price: item.price?.amount.toFixed 2
-      total_price: (item.price?.amount*(item.amount or 1)).toFixed 2
+      price: formatPrice item.price
+      total_price: formatPrice item.price, item.amount
       date: item.date?.toLocaleDateString 'de-DE'
     ))
     row.data 'id', item._id
-    row.find('.price').attr 'title', "#{item.amount}x #{item.price.amount.toFixed 2}" if item.amount
+    row.find('.price').attr 'title', "#{item.amount}x #{formatPrice item.price}" if item.amount
     @table.find('#noItems').hide()
     @body.append row
 

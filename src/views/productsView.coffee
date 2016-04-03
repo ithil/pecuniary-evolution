@@ -1,6 +1,7 @@
 $ = app.$
 products = app.databases.products
 loadTemplate = app._view.loadTemplate
+formatPrice = app.utils.formatPrice
 
 class ProductsTable
   constructor: (container) ->
@@ -14,7 +15,7 @@ class ProductsTable
     template = loadTemplate 'products-table-product'
     row = $(template(
       description: product.description
-      price: product.price?.amount.toFixed 2
+      price: formatPrice product.price
       shop: product.shop
     ))
     row.data 'id', product._id
