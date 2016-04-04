@@ -1,10 +1,11 @@
-$         = app.$
-window    = app.window
-document  = window.document
-parseDate = app.utils.parseDate
-view      = app.views.expenses
-expenses  = app.databases.expenses
-products  = app.databases.products
+$          = app.$
+window     = app.window
+document   = window.document
+parseDate  = app.utils.parseDate
+formatDate = app.utils.formatDate
+view       = app.views.expenses
+expenses   = app.databases.expenses
+products   = app.databases.products
 
 # Select all on focus
 $('#addItemDialog .inputPrice').focus -> this.select()
@@ -24,9 +25,11 @@ $('#addItemDialog .inputPrice').blur ->
   unless isNaN val
     e.val val.toFixed 2
 
-toggleAddItemDialog = ->
+toggleAddItemDialog = (show) ->
   addItemDialog = $('#addItemDialog')
   visible = addItemDialog.is ':visible'
+  if show? and show and visible then return
+  if show? and not show and not visible then return
   addItemDialog.show() if not visible
   onComplete = ->
     addItemDialog.hide() if visible
@@ -35,12 +38,13 @@ toggleAddItemDialog = ->
     { bottom: if visible then "-#{bottomPixels}px" else '-3px' },
     { duration: 250, complete: onComplete }
   )
-$('#addItemButton').click toggleAddItemDialog
+$('#addItemButton').click -> toggleAddItemDialog()
 $('#addItemDialog').css 'bottom', "-#{$('#addItemDialog').height()+3}px"
 
 clearAddItemDialog = () ->
   $('#addItemDialog input').val('')
   $('#addItemDialog .inputAmount').text('1')
+  $('#addItemDialog').removeClass 'edit'
 
 submitItem = () ->
   des = $('#addItemDialog .inputDes').val()
@@ -63,21 +67,43 @@ submitItem = () ->
     tags = tagsInput.match(/[^,]+/g).map (i) -> i.trim()
 
   return false unless des and price and date # Abort if one of the values is missing
-  expenses.addItem({
-    description: des
-    price: { amount: parseFloat(price), currency: 'EUR' }
-    date: date
-    amount: if amount > 1 then amount else undefined
-    shop: shop
-    weight: weight
-    tags: tags
-  }, ->
-    view.loadItems()
-  )
+  item = {}
+  item.description = des
+  item.price = { amount: parseFloat(price), currency: 'EUR' }
+  item.date = date
+  if amount > 1 then item.amount = amount
+  if shop.length > 0 then item.shop = shop
+  if weight? then item.weight = weight
+  if tags? then item.tags = tags
+
+  if $('#addItemDialog').hasClass 'edit'
+    id = $('#addItemDialog .id').val()
+    expenses.updateItem id, item, -> view.loadItems()
+  else
+    expenses.addItem item, -> view.loadItems()
   clearAddItemDialog()
+
+editItem = (id) ->
+  expenses.getItemById id, (item) ->
+    $addItemDialog = $('#addItemDialog')
+    $addItemDialog.addClass 'edit'
+    toggleAddItemDialog(true)
+    $addItemDialog.find('.id').val item._id
+    $addItemDialog.find('.inputDes').val item.description
+    $addItemDialog.find('.inputAmount').text item.amount or 1
+    $addItemDialog.find('.inputPrice').val item.price.amount.toFixed 2
+    $addItemDialog.find('.inputDate').val formatDate item.date
+    $addItemDialog.find('.inputWeight').val if item.weight then item.weight.amount+item.weight.unit else ''
+    $addItemDialog.find('.inputShop').val item.shop
+    $addItemDialog.find('.inputTags').val if item.tags then item.tags.join ', ' else ''
+
+$('.expenses tbody').on 'dblclick', '.item', ->
+  id = $(this).data 'id'
+  editItem id
 
 listener = new window.keypress.Listener $('#addItemDialog')
 listener.simple_combo 'shift enter', -> submitItem()
+listener.simple_combo 'escape', -> clearAddItemDialog(); toggleAddItemDialog(false)
 listener.simple_combo 'ctrl a', -> $('#inputAmount').text (__, str) -> parseInt(str)+1
 listener.simple_combo 'ctrl x', -> $('#inputAmount').text (__, str) -> parseInt(str)-1
 

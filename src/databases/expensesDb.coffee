@@ -10,12 +10,19 @@ getAllExpenses = (callback) ->
     else
       callback false
 
+getItemById = (id, callback) ->
+  expenses.findOne _id: id, (err, item) ->
+    throw err if err
+    if item?
+      callback item
+    else
+      callback false
+
 addItem = (item, callback) ->
   expenses.save item, callback
 
 updateItem = (id, changes, callback) ->
-  expenses.update { _id: id }, { $set: changes }, ->
-    callback()
+  expenses.update { _id: id }, { $set: changes }, callback
 
 deleteItem = (id, callback) ->
   expenses.findOne { _id: id }, (err, doc) ->
@@ -30,4 +37,5 @@ module.exports = {
   addItem
   updateItem
   deleteItem
+  getItemById
 }
