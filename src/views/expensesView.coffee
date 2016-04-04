@@ -2,6 +2,7 @@ $ = app.$
 expenses = app.databases.expenses
 loadTemplate = app._view.loadTemplate
 formatPrice = app.utils.formatPrice
+weekdays = app.utils.shortWeekdays
 
 class ExpenseTable
   constructor: (container) ->
@@ -18,7 +19,6 @@ class ExpenseTable
       amount: item.amount
       price: formatPrice item.price
       total_price: formatPrice item.price, item.amount
-      date: item.date?.toLocaleDateString 'de-DE'
     ))
     row.data 'id', item._id
     row.find('.price').attr 'title', "#{item.amount}x #{formatPrice item.price}" if item.amount
@@ -26,8 +26,22 @@ class ExpenseTable
     @body.append row
 
   addItems: (arr) ->
+    currentDate = undefined
+    totalPrice = 0
+    DStemplate = loadTemplate 'date-separator'
     for i in arr
+      if not currentDate? or currentDate.toDateString() isnt i.date.toDateString()
+        if lastDS?
+          lastDS.find('.totalPrice').text formatPrice {amount: totalPrice, currency: 'EUR'}
+        DS = $(DStemplate(date: i.date.toLocaleDateString('de-DE'), weekday: weekdays[i.date.getDay()]))
+        @body.append DS
+        totalPrice = 0
+        lastDS = DS
+      totalPrice += i.price.amount*(i.amount or 1)
+      currentDate = i.date
       @addItem i
+    # Do it one last time
+    lastDS.find('.totalPrice').text formatPrice {amount: totalPrice, currency: 'EUR'}
 
   clearTable: ->
     @body.empty()

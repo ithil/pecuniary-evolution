@@ -54,4 +54,7 @@ utils.formatPrice = (price, n) ->
   currencySymbol = currencySymbols[currency] or currency
   return amount+(currencySymbol or '')
 
+utils.weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+utils.shortWeekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
 module.exports = utils
