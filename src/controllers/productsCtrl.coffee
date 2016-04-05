@@ -26,7 +26,7 @@ toggleAddProductDialog = (show) ->
     { bottom: if visible then "-#{bottomPixels}px" else '-3px' },
     { duration: 250, complete: onComplete }
   )
-$('#addProductButton').click toggleAddProductDialog
+$('#addProductButton').click -> toggleAddProductDialog()
 $('#addProductDialog').css 'bottom', "-#{$('#addProductDialog').height()+3}px"
 
 clearAddProductDialog = () ->

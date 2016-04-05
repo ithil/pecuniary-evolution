@@ -18,7 +18,7 @@ toggleAddThingDialog = ->
     { bottom: if visible then "-#{bottomPixels}px" else '-3px' },
     { duration: 250, complete: onComplete }
   )
-$('#addThingButton').click toggleAddThingDialog
+$('#addThingButton').click -> toggleAddThingDialog()
 $('#addThingDialog').css 'bottom', "-#{$('#addThingDialog').height()+3}px"
 
 clearAddThingDialog = () ->
