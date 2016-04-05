@@ -9,14 +9,21 @@ getProducts = (query, callback) ->
     throw err if err
     callback docs
 
+getProductById = (id, callback) ->
+  products.findOne _id: id, (err, product) ->
+    throw err if err
+    if product?
+      callback product
+    else
+      callback false
+
 addProduct = (product, callback) ->
   product ?= { }
   product.lastModified = new Date()
   products.save product, callback
 
 updateProduct = (id, changes, callback) ->
-  products.update { _id: id }, { $set: changes }, ->
-    callback()
+  products.update { _id: id }, { $set: changes }, callback
 
 deleteProduct = (id, callback) ->
   products.findOne { _id: id }, (err, doc) ->
@@ -28,6 +35,7 @@ deleteProduct = (id, callback) ->
 
 module.exports = {
   getProducts
+  getProductById
   addProduct
   updateProduct
   deleteProduct

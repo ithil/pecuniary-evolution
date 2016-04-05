@@ -13,9 +13,11 @@ $('#addProductDialog .inputPrice').blur ->
   unless isNaN val
     e.val val.toFixed 2
 
-toggleAddProductDialog = ->
+toggleAddProductDialog = (show) ->
   $addProductDialog = $('#addProductDialog')
   visible = $addProductDialog.is ':visible'
+  if show? and show and visible then return
+  if show? and not show and not visible then return
   $addProductDialog.show() if not visible
   onComplete = ->
     $addProductDialog.hide() if visible
@@ -29,7 +31,8 @@ $('#addProductDialog').css 'bottom', "-#{$('#addProductDialog').height()+3}px"
 
 clearAddProductDialog = () ->
   $('#addProductDialog input').val('')
-  $('#addProductDialog .inputAmount').text('1')
+  $('#addProductDialog').removeClass 'edit'
+  $('#addProductDialog .id').val('')
 
 submitProduct = () ->
   des = $('#addProductDialog .inputDes').val()
@@ -41,18 +44,36 @@ submitProduct = () ->
     tags = tagsInput.match(/[^,]+/g).map (i) -> i.trim()
 
   return false unless des
-  products.addProduct({
-    description: des
-    price: if price then { amount: parseFloat(price), currency: 'EUR' } else undefined
-    shop: shop
-    tags: tags
-  }, ->
-    view.loadProducts()
-  )
+  product = {}
+  product.description = des
+  if price then product.price = { amount: parseFloat(price), currency: 'EUR'}
+  if shop.length > 0 then product.shop = shop
+  if tags? then product.tags = tags
+  if $('#addProductDialog').hasClass 'edit'
+    id = $('#addProductDialog .id').val()
+    products.updateProduct id, product, -> view.loadProducts()
+  else
+    products.addProduct product, -> view.loadProducts()
   clearAddProductDialog()
+
+editProduct = (id) ->
+  products.getProductById id, (product) ->
+    $addProductDialog = $('#addProductDialog')
+    $addProductDialog.addClass 'edit'
+    toggleAddProductDialog(true)
+    $addProductDialog.find('.id').val product._id
+    $addProductDialog.find('.inputDes').val product.description
+    $addProductDialog.find('.inputPrice').val product.price.amount.toFixed 2
+    $addProductDialog.find('.inputShop').val product.shop
+    $addProductDialog.find('.inputTags').val if product.tags then product.tags.join ', ' else ''
+
+$('.products tbody').on 'dblclick', '.product', ->
+  id = $(this).data 'id'
+  editProduct id
 
 listener = new window.keypress.Listener $('#addProductDialog')
 listener.simple_combo 'shift enter', -> submitProduct()
+listener.simple_combo 'escape', -> clearAddProductDialog(); toggleAddProductDialog(false)
 
 $('.products tbody').on 'click', '.delete', ->
   id = $(this).parent().data 'id'

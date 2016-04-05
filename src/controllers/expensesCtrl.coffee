@@ -45,6 +45,7 @@ clearAddItemDialog = () ->
   $('#addItemDialog input').val('')
   $('#addItemDialog .inputAmount').text('1')
   $('#addItemDialog').removeClass 'edit'
+  $('#addItemDialog .id').val('')
 
 submitItem = () ->
   des = $('#addItemDialog .inputDes').val()
