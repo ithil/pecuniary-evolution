@@ -33,12 +33,13 @@ clearAddProductDialog = () ->
   $('#addProductDialog input').val('')
   $('#addProductDialog').removeClass 'edit'
   $('#addProductDialog .id').val('')
+  $('#addProductDialog input[name="pricePerWeight"]').prop 'checked', false
 
 submitProduct = () ->
   des = $('#addProductDialog .inputDes').val()
   price = $('#addProductDialog .inputPrice').val()
   shop = $('#addProductDialog .inputShop').val()
-
+  pricePerWeight = $('#addProductDialog input[name="pricePerWeight"]').is ':checked'
   tagsInput = $('#addProductDialog .inputTags').val()
   if tagsInput
     tags = tagsInput.match(/[^,]+/g).map (i) -> i.trim()
@@ -48,6 +49,7 @@ submitProduct = () ->
   product.description = des
   if price then product.price = { amount: parseFloat(price), currency: 'EUR'}
   if shop.length > 0 then product.shop = shop
+  product.pricePerWeight = pricePerWeight
   if tags? then product.tags = tags
   if $('#addProductDialog').hasClass 'edit'
     id = $('#addProductDialog .id').val()
@@ -65,6 +67,7 @@ editProduct = (id) ->
     $addProductDialog.find('.inputDes').val product.description
     $addProductDialog.find('.inputPrice').val product.price.amount.toFixed 2
     $addProductDialog.find('.inputShop').val product.shop
+    $addProductDialog.find('input[name="pricePerWeight"]').prop 'checked', product.pricePerWeight or false
     $addProductDialog.find('.inputTags').val if product.tags then product.tags.join ', ' else ''
 
 $('.products tbody').on 'dblclick', '.product', ->
