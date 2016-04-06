@@ -21,13 +21,13 @@ toggleAddProductDialog = (show) ->
   $addProductDialog.show() if not visible
   onComplete = ->
     $addProductDialog.hide() if visible
-  bottomPixels = $addProductDialog.height()+3
+  bottomPixels = $addProductDialog.outerHeight()
   $addProductDialog.animate(
-    { bottom: if visible then "-#{bottomPixels}px" else '-3px' },
+    { bottom: if visible then "-#{bottomPixels}px" else "-#{$addProductDialog.css 'border-bottom-width'}" },
     { duration: 250, complete: onComplete }
   )
 $('#addProductButton').click -> toggleAddProductDialog()
-$('#addProductDialog').css 'bottom', "-#{$('#addProductDialog').height()+3}px"
+$('#addProductDialog').css 'bottom', "-#{$('#addProductDialog').outerHeight()}px"
 
 clearAddProductDialog = () ->
   $('#addProductDialog input').val('')

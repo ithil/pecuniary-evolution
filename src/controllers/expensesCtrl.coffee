@@ -33,13 +33,13 @@ toggleAddItemDialog = (show) ->
   addItemDialog.show() if not visible
   onComplete = ->
     addItemDialog.hide() if visible
-  bottomPixels = addItemDialog.height()+3
+  bottomPixels = addItemDialog.outerHeight()
   addItemDialog.animate(
-    { bottom: if visible then "-#{bottomPixels}px" else '-3px' },
+    { bottom: if visible then "-#{bottomPixels}px" else "-#{addItemDialog.css 'border-bottom-width'}" },
     { duration: 250, complete: onComplete }
   )
 $('#addItemButton').click -> toggleAddItemDialog()
-$('#addItemDialog').css 'bottom', "-#{$('#addItemDialog').height()+3}px"
+$('#addItemDialog').css 'bottom', "-#{$('#addItemDialog').outerHeight()}px"
 
 clearAddItemDialog = () ->
   $('#addItemDialog input').val('')
