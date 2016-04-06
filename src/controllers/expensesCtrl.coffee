@@ -26,16 +26,16 @@ $('#addItemDialog .inputPrice').blur ->
     e.val val.toFixed 2
 
 toggleAddItemDialog = (show) ->
-  addItemDialog = $('#addItemDialog')
-  visible = addItemDialog.is ':visible'
+  $addItemDialog = $('#addItemDialog')
+  visible = $addItemDialog.is ':visible'
   if show? and show and visible then return
   if show? and not show and not visible then return
-  addItemDialog.show() if not visible
+  $addItemDialog.show() if not visible
   onComplete = ->
-    addItemDialog.hide() if visible
-  bottomPixels = addItemDialog.outerHeight()
-  addItemDialog.animate(
-    { bottom: if visible then "-#{bottomPixels}px" else "-#{addItemDialog.css 'border-bottom-width'}" },
+    $addItemDialog.hide() if visible
+  bottomPixels = $addItemDialog.outerHeight()
+  $addItemDialog.animate(
+    { bottom: if visible then "-#{bottomPixels}px" else "-#{$addItemDialog.css 'border-bottom-width'}" },
     { duration: 250, complete: onComplete }
   )
 $('#addItemButton').click -> toggleAddItemDialog()
