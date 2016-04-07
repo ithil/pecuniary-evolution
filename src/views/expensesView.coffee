@@ -6,14 +6,14 @@ weekdays = app.utils.shortWeekdays
 
 class ExpenseTable
   constructor: (container) ->
-    template = loadTemplate 'expense-table'
+    template = loadTemplate 'expenses/table'
     @table = $(template())
     @head = @table.find 'thead'
     @body = @table.find 'tbody'
     $(container).append @table
 
   addItem: (item) ->
-    template = loadTemplate 'expense-table-item'
+    template = loadTemplate 'expenses/table-item'
     row = $(template(
       description: item.description
       amount: item.amount
@@ -28,7 +28,7 @@ class ExpenseTable
   addItems: (arr) ->
     currentDate = undefined
     totalPrice = 0
-    DStemplate = loadTemplate 'date-separator'
+    DStemplate = loadTemplate 'expenses/date-separator'
     for i in arr
       if not currentDate? or currentDate.toDateString() isnt i.date.toDateString()
         if lastDS?
@@ -56,7 +56,7 @@ loadItems = ->
       $('#noItems').show()
 
 $('<button>+</button>').attr(id:'addItemButton', class:'addButton').appendTo '#expenses-tab'
-AIDtemplate = $ loadTemplate('add-item-dialog')()
+AIDtemplate = $ loadTemplate('expenses/add-dialog')()
 AIDtemplate.appendTo '#expenses-tab'
 
 $ ->

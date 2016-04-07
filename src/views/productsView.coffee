@@ -5,14 +5,14 @@ formatPrice = app.utils.formatPrice
 
 class ProductsTable
   constructor: (container) ->
-    template = loadTemplate 'products-table'
+    template = loadTemplate 'products/table'
     @table = $(template())
     @head = @table.find 'thead'
     @body = @table.find 'tbody'
     $(container).append @table
 
   addProduct: (product) ->
-    template = loadTemplate 'products-table-product'
+    template = loadTemplate 'products/table-product'
     row = $(template(
       description: product.description
       price: formatPrice product.price
@@ -30,7 +30,7 @@ class ProductsTable
     @body.empty()
 
 $('<button>Add product</button>').attr(id:'addProductButton', class:'addButton').appendTo '#products-tab'
-APDtemplate = $ loadTemplate('add-product-dialog')()
+APDtemplate = $ loadTemplate('products/add-dialog')()
 APDtemplate.appendTo '#products-tab'
 
 productsTable = new ProductsTable $('#products-tab')
