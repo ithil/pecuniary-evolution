@@ -45,7 +45,7 @@ clearAddItemDialog = () ->
   $('#addItemDialog input').val('')
   $('#addItemDialog .inputAmount').text('1')
   $('#addItemDialog').removeClass 'edit'
-  $('#addItemDialog .id').val('')
+  $('#addItemDialog').find('.id, .productId, thingId').val('')
 
 submitItem = () ->
   des = $('#addItemDialog .inputDes').val()
@@ -53,6 +53,8 @@ submitItem = () ->
   date = parseDate($('#addItemDialog .inputDate').val())
   amount = parseInt $('#addItemDialog .inputAmount').text()
   shop = $('#addItemDialog .inputShop').val()
+  productId = $('#addItemDialog .productId').val()
+  thingId = $('#addItemDialog .thingId').val()
 
   weightInput = $('#addItemDialog .inputWeight').val()
   weightRE = /([\d\.]+)\s*([a-zA-z]*)/g
@@ -76,6 +78,8 @@ submitItem = () ->
   if shop.length > 0 then item.shop = shop
   if weight? then item.weight = weight
   if tags? then item.tags = tags
+  if productId.length > 0 then item.productId = productId
+  if thingId.length > 0 then item.thingId = thingId
 
   if $('#addItemDialog').hasClass 'edit'
     id = $('#addItemDialog .id').val()
@@ -97,6 +101,8 @@ editItem = (id) ->
     $addItemDialog.find('.inputWeight').val if item.weight then item.weight.amount+item.weight.unit else ''
     $addItemDialog.find('.inputShop').val item.shop
     $addItemDialog.find('.inputTags').val if item.tags then item.tags.join ', ' else ''
+    $addItemDialog.find('.productId').val item.productId
+    $addItemDialog.find('.thingId').val item.thingId
 
 $('.expenses tbody').on 'dblclick', '.item', ->
   id = $(this).data 'id'
@@ -121,7 +127,7 @@ $('#addItemDialog .inputDes').autocomplete
       docs.forEach (d) ->
         item = { }
         item.value = d.description
-        item.id = d._id
+        item.productId = d._id
         item.price = d.price
         item.shop = d.shop
         item.tags = d.tags
@@ -130,6 +136,7 @@ $('#addItemDialog .inputDes').autocomplete
       callback items
   select: (event, ui) ->
     item = ui.item
+    $('#addItemDialog .productId').val item.productId
     $('#addItemDialog .inputPrice').val item.price.amount
     $('#addItemDialog .inputShop').val item.shop
     $('#addItemDialog .inputTags').val item.tags.join ', '
