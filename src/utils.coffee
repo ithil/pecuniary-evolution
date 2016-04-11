@@ -59,7 +59,7 @@ utils.formatDate = (date, str) ->
   # Needs to be expanded
   "#{date.getDate()}/#{date.getMonth()+1}/#{date.getFullYear()}"
 
-utils.weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-utils.shortWeekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+utils.weekdays = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+utils.shortWeekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 module.exports = utils
