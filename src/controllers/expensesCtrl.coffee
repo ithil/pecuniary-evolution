@@ -1,11 +1,12 @@
-$          = app.$
-window     = app.window
-document   = window.document
-parseDate  = app.utils.parseDate
-formatDate = app.utils.formatDate
-view       = app.views.expenses
-expenses   = app.databases.expenses
-products   = app.databases.products
+$           = app.$
+window      = app.window
+document    = window.document
+parseDate   = app.utils.parseDate
+formatDate  = app.utils.formatDate
+formatPrice = app.utils.formatPrice
+view        = app.views.expenses
+expenses    = app.databases.expenses
+products    = app.databases.products
 
 # Select all on focus
 $('#addItemDialog .inputPrice').focus -> this.select()
@@ -42,10 +43,13 @@ $('#addItemButton').click -> toggleAddItemDialog()
 $('#addItemDialog').css 'bottom', "-#{$('#addItemDialog').outerHeight()}px"
 
 clearAddItemDialog = () ->
-  $('#addItemDialog input').val('')
+  $('#addItemDialog input:not(.inputDate)').val('')
   $('#addItemDialog .inputAmount').text('1')
   $('#addItemDialog').removeClass 'edit'
-  $('#addItemDialog').find('.id, .productId, thingId').val('')
+  $('#addItemDialog .pricePerWeight').removeData()
+  $('#addItemDialog .inputPrice').attr 'placeholder', 'Price'
+  # Jump back to Description field
+  $('#addItemDialog .inputDes').focus()
 
 submitItem = () ->
   des = $('#addItemDialog .inputDes').val()
@@ -63,12 +67,14 @@ submitItem = () ->
     weight = { }
     [__, weight.amount, weight.unit] = weightMatch
     unless weight.unit
-      weight.unit = 'g'
+      weight.unit = 'kg'
 
   tagsInput = $('#addItemDialog .inputTags').val()
   if tagsInput
     tags = tagsInput.match(/[^,]+/g).map (i) -> i.trim()
-
+  pricePerWeight = parseFloat($('#addItemDialog .pricePerWeight').data 'price')
+  if not price and pricePerWeight and weight
+    price = weight.amount * pricePerWeight
   return false unless des and price and date # Abort if one of the values is missing
   item = {}
   item.description = des
@@ -131,12 +137,25 @@ $('#addItemDialog .inputDes').autocomplete
         item.price = d.price
         item.shop = d.shop
         item.tags = d.tags
+        item.pricePerWeight = d.pricePerWeight
         # ^ That's super ugly, I know
         items.push item
       callback items
   select: (event, ui) ->
     item = ui.item
     $('#addItemDialog .productId').val item.productId
-    $('#addItemDialog .inputPrice').val item.price.amount
+    if item.pricePerWeight
+      $('#addItemDialog .pricePerWeight').data 'price', item.price.amount
+      $('#addItemDialog .pricePerWeight').data 'perWeight', item.perWeight
+      $('#addItemDialog .inputWeight').focus()
+    else
+      $('#addItemDialog .inputPrice').val item.price.amount
     $('#addItemDialog .inputShop').val item.shop
     $('#addItemDialog .inputTags').val item.tags.join ', '
+
+$('#addItemDialog .inputWeight').blur ->
+  pricePerWeight = parseFloat($('#addItemDialog .pricePerWeight').data 'price')
+  if pricePerWeight?
+    weight = parseFloat $('#addItemDialog .inputWeight').val()
+    price = formatPrice({amount: weight * pricePerWeight})
+    $('#addItemDialog .inputPrice').attr 'placeholder', price
