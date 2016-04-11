@@ -26,6 +26,9 @@ $('#addItemDialog .inputPrice').blur ->
   unless isNaN val
     e.val val.toFixed 2
 
+$('#addItemDialog .inputAmount').click -> $(this).attr('contenteditable', 'true').focus()
+$('#addItemDialog .inputAmount').blur -> $(this).attr 'contenteditable', 'false'
+
 toggleAddItemDialog = (show) ->
   $addItemDialog = $('#addItemDialog')
   visible = $addItemDialog.is ':visible'
