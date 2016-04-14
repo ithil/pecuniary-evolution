@@ -32,8 +32,9 @@ $('#addProductDialog').css 'bottom', "-#{$('#addProductDialog').outerHeight()}px
 clearAddProductDialog = () ->
   $('#addProductDialog input').val('')
   $('#addProductDialog').removeClass 'edit'
-  $('#addProductDialog .id').val('')
   $('#addProductDialog input[name="pricePerWeight"]').prop 'checked', false
+  # Jump back to Description field
+  $('#addProductDialog .inputDes').focus()
 
 submitProduct = () ->
   des = $('#addProductDialog .inputDes').val()

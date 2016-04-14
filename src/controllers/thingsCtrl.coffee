@@ -24,7 +24,8 @@ $('#addThingDialog').css 'bottom', "-#{$('#addThingDialog').outerHeight()}px"
 clearAddThingDialog = () ->
   $('#addThingDialog input').val('')
   $('#addThingDialog').removeClass 'edit'
-  $('#addThingDialog .id').val('')
+  # Jump back to Description field
+  $('#addThingDialog .inputDes').focus()
 
 submitThing = () ->
   des = $('#addThingDialog .inputDes').val()
