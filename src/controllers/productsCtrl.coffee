@@ -3,6 +3,7 @@ window    = app.window
 document  = window.document
 view      = app.views.products
 products  = app.databases.products
+things    = app.databases.things
 
 # Initialize all relevant jQuery objects
 $addProductButton = $('#addProductButton')
@@ -15,6 +16,7 @@ $pricePerWeight  = $addProductDialog.find 'input[name="pricePerWeight"]'
 $inputPerWeight  = $addProductDialog.find '.inputPerWeight'
 $inputTags       = $addProductDialog.find '.inputTags'
 $_id             = $addProductDialog.find '.id'
+$_thingId        = $addProductDialog.find '.thingId'
 
 # Select all on focus
 $inputPrice.focus -> this.select()
@@ -52,6 +54,7 @@ submitProduct = () ->
   price = $inputPrice.val()
   shop = $inputShop.val()
   pricePerWeight = $pricePerWeight.is ':checked'
+  thingId = $_thingId.val()
   tagsInput = $inputTags.val()
   if tagsInput
     tags = tagsInput.match(/[^,]+/g).map (i) -> i.trim()
@@ -63,6 +66,8 @@ submitProduct = () ->
   if shop.length > 0 then product.shop = shop
   product.pricePerWeight = pricePerWeight
   if tags? then product.tags = tags
+  if thingId.length > 0 then product.thingId = thingId
+
   if $addProductDialog.hasClass 'edit'
     id = $_id.val()
     products.updateProduct id, product, -> view.loadProducts()
@@ -75,6 +80,10 @@ editProduct = (id) ->
     $addProductDialog.addClass 'edit'
     toggleAddProductDialog(true)
     $_id.val product._id
+    $_thingId.val product.thingId
+    if product.thingId
+      things.getThingById product.thingId, (thing) ->
+        $inputThing.val thing.description
     $inputDes.val product.description
     $inputPrice.val product.price.amount.toFixed 2
     $inputShop.val product.shop
@@ -93,3 +102,20 @@ $('.products tbody').on 'click', '.delete', ->
   id = $(this).parent().data 'id'
   products.deleteProduct id, ->
     view.loadProducts()
+
+$inputThing.autocomplete
+  source: (input, callback) ->
+    query = input.term
+    things.getThings query, (docs) ->
+      items = [ ] # Array to contain all the suggestion entries
+      docs.forEach (d) ->
+        item = { }
+        item.value = d.description
+        item.thingId = d._id
+        item.tags = d.tags
+        items.push item
+      callback items
+  select: (event, ui) ->
+    item = ui.item
+    $_thingId.val item.thingId
+    $inputTags.val item.tags.join ', '
