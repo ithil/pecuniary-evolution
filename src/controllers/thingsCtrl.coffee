@@ -4,11 +4,14 @@ document  = window.document
 view      = app.views.things
 things    = app.databases.things
 
-# Select all on focus
-$('#addThingDialog .inputPrice').focus -> this.select()
+# Initialize all relevant jQuery objects
+$addThingButton = $('#addThingButton')
+$addThingDialog = $('#addThingDialog')
+$inputDes  = $addThingDialog.find '.inputDes'
+$inputTags = $addThingDialog.find '.inputTags'
+$_id       = $addThingDialog.find '.id'
 
 toggleAddThingDialog = ->
-  $addThingDialog = $('#addThingDialog')
   visible = $addThingDialog.is ':visible'
   $addThingDialog.show() if not visible
   onComplete = ->
@@ -18,18 +21,18 @@ toggleAddThingDialog = ->
     { bottom: if visible then "-#{bottomPixels}px" else "-#{$addThingDialog.css 'border-bottom-width'}" },
     { duration: 250, complete: onComplete }
   )
-$('#addThingButton').click -> toggleAddThingDialog()
-$('#addThingDialog').css 'bottom', "-#{$('#addThingDialog').outerHeight()}px"
+$addThingButton.click -> toggleAddThingDialog()
+$addThingDialog.css 'bottom', "-#{$addThingDialog.outerHeight()}px"
 
 clearAddThingDialog = () ->
-  $('#addThingDialog input').val('')
-  $('#addThingDialog').removeClass 'edit'
+  $('#addThingDialog').find('input').val('')
+  $addThingDialog.removeClass 'edit'
   # Jump back to Description field
-  $('#addThingDialog .inputDes').focus()
+  $inputDes.focus()
 
 submitThing = () ->
-  des = $('#addThingDialog .inputDes').val()
-  tagsInput = $('#addThingDialog .inputTags').val()
+  des = $inputDes.val()
+  tagsInput = $inputTags.val()
   if tagsInput
     tags = tagsInput.match(/[^,]+/g).map (i) -> i.trim()
 
@@ -37,8 +40,8 @@ submitThing = () ->
   thing = {}
   thing.description = des
   if tags? then thing.tags = tags
-  if $('#addThingDialog').hasClass 'edit'
-    id = $('#addThingDialog .id').val()
+  if $addThingDialog.hasClass 'edit'
+    id = $_id.val()
     things.updateThing id, thing, -> view.loadThings()
   else
     things.addThing thing, -> view.loadThings()
@@ -46,18 +49,17 @@ submitThing = () ->
 
 editThing = (id) ->
   things.getThingById id, (thing) ->
-    $addThingDialog = $('#addThingDialog')
     $addThingDialog.addClass 'edit'
     toggleAddThingDialog(true)
-    $addThingDialog.find('.id').val thing._id
-    $addThingDialog.find('.inputDes').val thing.description
-    $addThingDialog.find('.inputTags').val if thing.tags then thing.tags.join ', ' else ''
+    $_id.val thing._id
+    $inputDes.val thing.description
+    $inputTags.val if thing.tags then thing.tags.join ', ' else ''
 
 $('.things tbody').on 'dblclick', '.thing', ->
   id = $(this).data 'id'
   editThing id
 
-listener = new window.keypress.Listener $('#addThingDialog')
+listener = new window.keypress.Listener $addThingDialog
 listener.simple_combo 'shift enter', -> submitThing()
 listener.simple_combo 'escape', -> clearAddThingDialog(); toggleAddThingDialog(false)
 
