@@ -23,6 +23,7 @@ addProduct = (product, callback) ->
   products.save product, callback
 
 updateProduct = (id, changes, callback) ->
+  changes.lastModified = new Date()
   products.update { _id: id }, { $set: changes }, callback
 
 deleteProduct = (id, callback) ->

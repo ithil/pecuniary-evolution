@@ -23,6 +23,7 @@ addThing = (thing, callback) ->
   things.save thing, callback
 
 updateThing = (id, changes, callback) ->
+  changes.lastModified = new Date()
   things.update { _id: id }, { $set: changes }, callback
 
 deleteThing = (id, callback) ->
