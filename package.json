@@ -20,6 +20,7 @@
     "linvodb3":"",
     "medeadown":"",
     "mkdirp":"",
-    "handlebars":""
+    "handlebars":"",
+    "moment": ""
   }
 }

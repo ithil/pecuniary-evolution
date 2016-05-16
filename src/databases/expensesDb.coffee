@@ -2,6 +2,8 @@ LinvoDB = app._database.LinvoDB
 
 expenses = new LinvoDB 'expenses', {  }
 
+raw = expenses
+
 getAllExpenses = (callback) ->
   expenses.find({ }).sort({date: -1}).exec (err, items) ->
     throw err if err
@@ -15,6 +17,14 @@ getItemById = (id, callback) ->
     throw err if err
     if item?
       callback item
+    else
+      callback false
+
+getExpensesInDateRange = (from, to, callback) ->
+  expenses.find date: {$gte: from, $lt: to}, (err, items) ->
+    throw err if err
+    if items.length > 0
+      callback items
     else
       callback false
 
@@ -38,4 +48,6 @@ module.exports = {
   updateItem
   deleteItem
   getItemById
+  getExpensesInDateRange
+  raw
 }

@@ -23,6 +23,7 @@ $tabs.tabs()
 addTab 'Expenses', 'expenses'
 addTab 'Products', 'products'
 addTab 'Things', 'things'
+addTab 'Stats', 'stats'
 $tabs.tabs 'option', 'active', 0
 $tabs.show()
 
@@ -32,6 +33,7 @@ views = { }
 views.expenses = require './views/expensesView.js'
 views.products = require './views/productsView.js'
 views.things = require './views/thingsView.js'
+views.stats = require './views/statsView.js'
 
 module.exports = {
   views
