@@ -9,6 +9,7 @@ utils.parseDate = (str) ->
   match = generalRE.exec str
   if match
     [__, day, __, month, __, year] = match
+    if year and year.length == 2 then year = "20#{year}" 
     date = new Date(
       year or currentDate.getUTCFullYear()
       if month then month-1 else currentDate.getUTCMonth()
