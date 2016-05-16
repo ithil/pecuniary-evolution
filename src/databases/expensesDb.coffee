@@ -21,7 +21,8 @@ getItemById = (id, callback) ->
       callback false
 
 getExpensesInDateRange = (from, to, callback) ->
-  expenses.find date: {$gte: from, $lt: to}, (err, items) ->
+  to = moment(to).add(1, 'day').toDate()
+  expenses.find date: {$gte: from, $lte: to}, (err, items) ->
     throw err if err
     if items.length > 0
       callback items

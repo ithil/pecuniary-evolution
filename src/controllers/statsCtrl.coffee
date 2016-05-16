@@ -20,6 +20,7 @@ $(document).ready ->
   go = ->
     dateFrom = parseDate($dateFrom.val())
     dateTo   = parseDate($dateTo.val())
+    dateTo = moment(dateTo).add(1, 'day').toDate()
     return unless dateFrom? and dateTo?
     query    = {date: {$gte: dateFrom, $lte: dateTo}}
     tag      = $tag.val()
