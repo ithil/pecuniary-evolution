@@ -1,6 +1,6 @@
 LinvoDB = app._database.LinvoDB
-
 expenses = new LinvoDB 'expenses', {  }
+moment = require 'moment'
 
 raw = expenses
 
